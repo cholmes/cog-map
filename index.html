@@ -1,1 +1,37 @@
-Nothing to see yet, move along...
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Using OpenLayers with ParcelJS</title>
+    <style>
+      html, body {
+        margin: 0;
+        height: 100%;
+      }
+      #map {
+        position: absolute;
+        top: 30;
+        bottom: 0;
+        width: 100%;
+        z-index: 0;
+      }
+    </style>
+  </head>
+  <body>
+    
+        <p><input type="checkbox" id="labels" name="labels"  checked="true"> Labels</p> 
+        <p> <button id="submit-url">Submit</button> </p>
+        <p> <form>
+          COG URL:<br>
+          <input type="text" name="cog-url" id="cog-url"><br><!--input type="submit" value="Submit" onclick="loadCog();"-->
+        </form> </p>
+        <div id="map" class="map" style="width: 100%; height: 80%; border: 1px solid #ccc;"></div>
+
+
+
+      </div>
+    <script src="ol-parceljs.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+  </body>
+</html>
