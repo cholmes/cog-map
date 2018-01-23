@@ -43,6 +43,7 @@ onClick('labels', function() {
 onClick('submit-url', function() {
   var name = document.getElementById("cog-url").value;
     console.log("submitted url" + name)
+    if (ValidURL(name)){
 
         var url = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + name;
         
@@ -54,8 +55,10 @@ onClick('submit-url', function() {
           });
         map.addLayer(cogLayer);
        var boundsUrl="https://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/bounds?url=" + name;
-       jquery.getJSON(boundsUrl, function(result){ //TODO: Get jquery right in imports
+       console.log("boundsUrl is " + boundsUrl);
+       jquery.getJSON(boundsUrl, function(result){ 
                  var extent = proj.transformExtent(result.bounds, 'EPSG:4326', 'EPSG:3857');
+                 console.log("extent is " + extent);
                  map.getView().fit(extent, map.getSize());
                  //map.getView().animate({
                  //   center: (ol.proj.fromLonLat([lon, lat])),
@@ -63,12 +66,13 @@ onClick('submit-url', function() {
                  //     });
                  
           });
-       console.log("updating to 43")
-       //update({count: 43});
        update({url: name});
        console.log("updated " + state );
+     } 
 
 }) 
+
+
 
 function toggleControl(element){
     console.log("called" + element)
@@ -77,7 +81,6 @@ function toggleControl(element){
   }
 
 var state = {
-  //count: 42,
   url: {
     default: "",
     deserialize: String
@@ -89,7 +92,7 @@ function listener(newState) {
   console.log("center is " + newState.center);
   console.log("zoom is " + newState.zoom);
   if ('url' in newState) {
-    //console.log("url is in!  " + newState.url);
+    //TODO: refactor in to common method with the submit, so we don't duplicate code
     var decoded = decodeURIComponent(newState.url);
     console.log("decoded is " + decoded);
     var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + decoded;
@@ -119,6 +122,24 @@ function listener(newState) {
       //update({url: decoded});  
     }
   // called when the state in the URL is different than what we have
+}
+
+function ValidURL(str) {
+  console.log("checking url " + str);
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  if(!pattern.test(str)) {
+    console.log("not valid");
+    alert("Please enter a valid URL.");
+    return false;
+  } else {
+    console.log("valid");
+    return true;
+  }
 }
 
 // register a state provider
