@@ -8,6 +8,7 @@ import sync from 'ol-hashed';
 import hashed from 'hashed';
 import jquery from 'jquery';
 
+
 var labels = new TileLayer({
             title: 'Labels',
             source: new XYZ({
@@ -40,7 +41,8 @@ onClick('labels', function() {
   labels.setVisible(document.getElementById("labels").checked);
 })  
 
-onClick('submit-url', function() {
+onClick('submit-url', function(event) {
+  event.preventDefault();
   var name = document.getElementById("cog-url").value;
     console.log("submitted url" + name)
     if (ValidURL(name)){
@@ -93,7 +95,10 @@ function listener(newState) {
   console.log("zoom is " + newState.zoom);
   if ('url' in newState) {
     //TODO: refactor in to common method with the submit, so we don't duplicate code
-    var decoded = decodeURIComponent(newState.url);
+
+    debugger;
+
+    var decoded = newState.url;//decodeURIComponent(newState.url);
     console.log("decoded is " + decoded);
     var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + decoded;
         
@@ -119,7 +124,7 @@ function listener(newState) {
                  
           });
        console.log("finished loading " + boundsUrl);*/
-      //update({url: decoded});  
+      // update({url: decoded});  
     }
   // called when the state in the URL is different than what we have
 }
