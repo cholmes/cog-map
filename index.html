@@ -23,19 +23,19 @@
       .controls {
         position: absolute;
         left: 40px;
-        text-outline: 2px 2px #ff0000;
+        background-color: rgba(100, 100, 105, 0.79);
       }
 
     </style>
   </head>
   <body>
-    <div id="map" class="map" style="width: 100%; height: 80%; border: 1px solid #ccc;"></div>
+    <div id="map" class="map" style="border: 1px solid #ccc;"></div>
     <div class="controls">
       <p><input type="checkbox" id="labels" name="labels"  checked="true"> Labels</p> 
       
       <p> <form>
         COG URL:<br> 
-        <input type="text" name="cog-url" id="cog-url" size="110"> 
+        <input type="text" name="cog-url" id="cog-url" size="110" value="http://oin-hotosm.s3.amazonaws.com/594ab0ba1b114600111194a3/0/d66720c4-148c-4e11-9d54-4ae2a6ba6351.tif"> 
         <button id="submit-url">Submit</button>
       </form> </p>
     </div>
