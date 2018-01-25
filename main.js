@@ -6,7 +6,7 @@ import XYZ from 'ol/source/xyz';
 import proj from 'ol/proj'; //is this the right way to pull this in? Or should it just be a single class?
 import sync from 'ol-hashed';
 import hashed from 'hashed';
-import jquery from 'jquery';
+import { getJSON } from 'jquery';
 import validUrl from 'valid-url';
 
 var labels = new TileLayer({
@@ -41,7 +41,7 @@ function zoomLoad(name) {
   if (ValidURL(name)) {
     var boundsUrl = "https://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/bounds?url=" + name;
 
-    jquery.getJSON(boundsUrl, function(result) {
+    getJSON(boundsUrl, function(result) {
 
       var extent = proj.transformExtent(result.bounds, 'EPSG:4326', 'EPSG:3857');
       map.getView().fit(extent, map.getSize());

@@ -6,7 +6,8 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "ol": "^4.6.4",
-    "ol-hashed": "^1.0.2"
+    "ol-hashed": "^1.0.2",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "parcel-bundler": "^1.2.1"
