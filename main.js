@@ -7,15 +7,15 @@ import proj from 'ol/proj'; //is this the right way to pull this in? Or should i
 import sync from 'ol-hashed';
 import hashed from 'hashed';
 import jquery from 'jquery';
-
+import validUrl from 'valid-url';
 
 var labels = new TileLayer({
-            title: 'Labels',
-            source: new XYZ({
-              
-              url: 'https://{1-4}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png'
-           })
-          });
+  title: 'Labels',
+  source: new XYZ({
+
+    url: 'https://{1-4}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png'
+  })
+});
 
 const map = new Map({
   target: 'map',
@@ -37,50 +37,75 @@ function onClick(id, callback) {
   document.getElementById(id).addEventListener('click', callback);
 }
 
-onClick('labels', function() {
-  labels.setVisible(document.getElementById("labels").checked);
-})  
+function zoomLoad(name) {
+  if (ValidURL(name)) {
+    var boundsUrl = "https://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/bounds?url=" + name;
+
+    jquery.getJSON(boundsUrl, function(result) {
+
+      var extent = proj.transformExtent(result.bounds, 'EPSG:4326', 'EPSG:3857');
+      map.getView().fit(extent, map.getSize());
+
+      var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + name;
+      var cogLayer = new TileLayer({
+        type: 'base',
+        source: new XYZ({
+          url: tilesUrl
+        })
+      });
+      var layers = map.getLayers();
+      layers.removeAt(2); //remove the previous COG map, so we're not loading extra tiles as we move around.
+      map.addLayer(cogLayer);
+      update({
+        url: name
+      });
+
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      alert("Request failed. Are you sure '" + name + "' is a valid COG?  ");
+    });
+    //TODO - include link to COG validator
+
+  }
+}
+
+//TODO: Add labels back in. Need a nice button for them, and also need to get them to overlay on the map.
+// onClick('labels', function() {
+//   labels.setVisible(document.getElementById("labels").checked);
+// })  
+
+onClick('sample-1', function() {
+  var planetUrl = "https://s3-us-west-2.amazonaws.com/planet-disaster-data/hurricane-harvey/SkySat_Freeport_s03_20170831T162740Z3.tif"
+  document.getElementById("cog-url").defaultValue = planetUrl;
+  zoomLoad(planetUrl);
+});
+
+onClick('sample-2', function() {
+  var oamUrl = "http://oin-hotosm.s3.amazonaws.com/56f9b5a963ebf4bc00074e70/0/56f9c2d42b67227a79b4faec.tif"
+  document.getElementById("cog-url").defaultValue = oamUrl;
+  zoomLoad(oamUrl);
+});
+
+onClick('sample-3', function() {
+  var oamUrl = "http://oin-hotosm.s3.amazonaws.com/59c66c5223c8440011d7b1e4/0/7ad397c0-bba2-4f98-a08a-931ec3a6e943.tif"
+  document.getElementById("cog-url").defaultValue = oamUrl;
+  zoomLoad(oamUrl);
+});
 
 onClick('submit-url', function(event) {
   event.preventDefault();
   var name = document.getElementById("cog-url").value;
-    console.log("submitted url" + name)
-    if (ValidURL(name)){
+  console.log("submitted url" + name)
+  zoomLoad(name);
 
-        var url = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + name;
-        
-         var cogLayer = new TileLayer({
-            type: 'base',
-            source: new XYZ({
-              url: url
-            })
-          });
-        map.addLayer(cogLayer);
-       var boundsUrl="https://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/bounds?url=" + name;
-       console.log("boundsUrl is " + boundsUrl);
-       jquery.getJSON(boundsUrl, function(result){ 
-                 var extent = proj.transformExtent(result.bounds, 'EPSG:4326', 'EPSG:3857');
-                 console.log("extent is " + extent);
-                 map.getView().fit(extent, map.getSize());
-                 //map.getView().animate({
-                 //   center: (ol.proj.fromLonLat([lon, lat])),
-                 //   duration: 2000
-                 //     });
-                 
-          });
-       update({url: name});
-       console.log("updated " + state );
-     } 
-
-}) 
+})
 
 
 
-function toggleControl(element){
-    console.log("called" + element)
-    labels.setVisible(element.checked);
-   
-  }
+function toggleControl(element) {
+  console.log("called" + element)
+  labels.setVisible(element.checked);
+
+}
 
 var state = {
   url: {
@@ -90,68 +115,42 @@ var state = {
 };
 
 function listener(newState) {
-  console.log("state is" + newState[0] + "  " + newState);
-  console.log("center is " + newState.center);
-  console.log("zoom is " + newState.zoom);
+
   if ('url' in newState) {
     //TODO: refactor in to common method with the submit, so we don't duplicate code
-
-    debugger;
-
-    var decoded = newState.url;//decodeURIComponent(newState.url);
-    console.log("decoded is " + decoded);
+    var decoded = decodeURIComponent(newState.url);
     var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + decoded;
-        
-         var cogLayer = new TileLayer({
-            type: 'base',
-            source: new XYZ({
-              url: tilesUrl
-            })
-          });
-        map.addLayer(cogLayer);
-        var view = map.getView();
 
-        console.log("view center is " + view.getCenter());
-        /*if (view.center)
-       var boundsUrl="https://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/bounds?url=" + decoded;
-       jquery.getJSON(boundsUrl, function(result){ 
-                 var extent = proj.transformExtent(result.bounds, 'EPSG:4326', 'EPSG:3857');
-                 map.getView().fit(extent, map.getSize());
-                 //map.getView().animate({
-                 //   center: (ol.proj.fromLonLat([lon, lat])),
-                 //   duration: 2000
-                 //     });
-                 
-          });
-       console.log("finished loading " + boundsUrl);*/
-      // update({url: decoded});  
+    var cogLayer = new TileLayer({
+      type: 'base',
+      source: new XYZ({
+        url: tilesUrl
+      })
+    });
+
+    map.addLayer(cogLayer);
+
+    if (decoded) {
+      document.getElementById("cog-url").defaultValue = decoded;
     }
-  // called when the state in the URL is different than what we have
+    //This had an attempt to move to a COG location, but then it messed up with existing hashes.
+    //May consider adding a button that will zoom the user to the location of the COG displayed.
+  }
 }
 
 function ValidURL(str) {
-  console.log("checking url " + str);
-  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-  if(!pattern.test(str)) {
-    console.log("not valid");
-    alert("Please enter a valid URL.");
+  if (!validUrl.isUri(str)) {
+    alert("'" + str + "' is not a valid URL. Did you forget to include http://? ");
+    //TODO - automatically add in http:// if it's not included and check that.
     return false;
   } else {
-    console.log("valid");
     return true;
   }
 }
 
 // register a state provider
-var update = hashed.register(state, listener);
 
-// When the state of your application changes, update the hash.
- // URL hash will become #/count/43/color/blue
+var update = hashed.register(state, listener);
 
 // persist center and zoom in the URL hash
 sync(map);
