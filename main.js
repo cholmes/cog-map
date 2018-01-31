@@ -46,7 +46,7 @@ function zoomLoad(name) {
       var extent = proj.transformExtent(result.bounds, 'EPSG:4326', 'EPSG:3857');
       map.getView().fit(extent, map.getSize());
 
-      var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + name;
+      var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.jpg?url=" + name;
       var cogLayer = new TileLayer({
         type: 'base',
         source: new XYZ({
