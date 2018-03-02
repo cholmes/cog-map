@@ -1,0 +1,6 @@
+# npm local stuff
+.cache
+node_modules
+
+# generated
+dist
