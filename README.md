@@ -14,7 +14,7 @@ now where it will double encode the URL when you share it, preventing repeated s
 ## Installation and Running
 
 If you want to clone the project and start developing against it, or just run your own, installation is pretty simple. You 
-need to have [Node and NPM](https://www.npmjs.com/get-npm) installed, and then you just clone this repo, go to the root and type:
+need to have [Node and NPM](https://www.npmjs.com/get-npm) installed (at least Node 8, for Parcel support - see below), and then you just clone this repo, go to the root and type:
 
 ```npm install```
 
