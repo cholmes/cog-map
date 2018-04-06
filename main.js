@@ -123,8 +123,9 @@ var state = {
 function listener(newState) {
 
   if ('url' in newState) {
+
     //TODO: refactor in to common method with the submit, so we don't duplicate code
-    var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + newState.url;
+    var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + encodeURIComponent(newState.url);
 
     var cogLayer = new TileLayer({
       type: 'base',
