@@ -76,19 +76,19 @@ function zoomLoad(name) {
 
 onClick('sample-1', function() {
   var planetUrl = "https://s3-us-west-2.amazonaws.com/planet-disaster-data/hurricane-harvey/SkySat_Freeport_s03_20170831T162740Z3.tif"
-  document.getElementById("cog-url").defaultValue = planetUrl;
+  document.getElementById("cog-url").value = planetUrl;
   zoomLoad(planetUrl);
 });
 
 onClick('sample-2', function() {
   var oamUrl = "http://oin-hotosm.s3.amazonaws.com/56f9b5a963ebf4bc00074e70/0/56f9c2d42b67227a79b4faec.tif"
-  document.getElementById("cog-url").defaultValue = oamUrl;
+  document.getElementById("cog-url").value = oamUrl;
   zoomLoad(oamUrl);
 });
 
 onClick('sample-3', function() {
   var oamUrl = "http://oin-hotosm.s3.amazonaws.com/59c66c5223c8440011d7b1e4/0/7ad397c0-bba2-4f98-a08a-931ec3a6e943.tif"
-  document.getElementById("cog-url").defaultValue = oamUrl;
+  document.getElementById("cog-url").value = oamUrl;
   zoomLoad(oamUrl);
 });
 
