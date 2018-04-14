@@ -4,6 +4,7 @@ import View from 'ol/view';
 import TileLayer from 'ol/layer/tile';
 import XYZ from 'ol/source/xyz';
 import proj from 'ol/proj'; //is this the right way to pull this in? Or should it just be a single class?
+import Attribution from 'ol/'
 import sync from 'ol-hashed';
 import hashed from 'hashed';
 import { getJSON } from 'jquery';
@@ -13,7 +14,9 @@ var labels = new TileLayer({
   title: 'Labels',
   source: new XYZ({
 
-    url: 'https://{1-4}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png'
+    url: 'https://{1-4}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',
+    attributions: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, ' + 
+         '© <a href="https://carto.com/attribution">CARTO</a>',
   })
 });
 
