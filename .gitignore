@@ -4,3 +4,6 @@ node_modules
 
 # generated
 dist
+
+#gh-pages
+gh-pages
