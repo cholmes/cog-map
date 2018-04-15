@@ -26,8 +26,8 @@
       .controls {
         position: relative;
         top: 5px;
-        left: 10px;
-        padding: 1em 3em;
+        left: 18px;
+        padding: 10px 35px;
         background-color: rgba(147, 93, 140, 0);
         font-family: "Source Sans Pro", Helvetica, sans-serif;
         font-size: 12pt;
@@ -59,7 +59,7 @@
         height: 2.5em;
         line-height: 1.75em;
         min-width: 5.25em;
-        padding: 0 1.5em;
+        padding: 0 1.1em;
         text-align: center;
         text-decoration: none;
         white-space: nowrap;
@@ -73,8 +73,17 @@
       }
 
       .text {
-        color: #f2f2f2; background: rgba(255, 74, 74, 0.6); font-size: 15px; line-height: 15px; font-weight: 700; margin: 0 2px 5px; float: left; padding: 4px; margin: 0 2px 5px; font-family: 'Libre Baskerville', serif; 
+        color: #f2f2f2; background: rgba(255, 74, 74, 0.6); font-size: 15px; line-height: 15px; font-weight: 700; margin: 0 2px 5px; float: left; padding: 4px; margin: 2.2px 3px 4px; font-family: 'Libre Baskerville', serif;
       }
+
+    @media only screen and (max-width : 480px) {
+        .text {
+          visibility: hidden;
+          font-size: 0px;
+          padding: 0px;
+          margin: 0 0 0;
+        }; 
+     }
 
       .samples {
         position: relative;
@@ -108,6 +117,8 @@
         white-space: nowrap;
         background-color: rgba(147, 93, 140, 0.79);
       }
+
+
 
 
 
