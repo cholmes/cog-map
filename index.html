@@ -36,7 +36,7 @@
       }
 
       .flexbox { display: flex; }
-      .flexbox .stretch { flex: 1; }
+      .flexbox .stretch { flex: 1; max-width: 800px;}
       .flexbox .normal { flex: 0; margin: 0 0 0 2.25rem; }
       .flexbox div input { padding: .5em 1em; width: 100%; }
       .flexbox div button {  
@@ -73,7 +73,17 @@
       }
 
       .text {
-        color: #f2f2f2; background: rgba(255, 74, 74, 0.6); font-size: 15px; line-height: 15px; font-weight: 700; margin: 0 2px 5px; float: left; padding: 4px; margin: 2.2px 3px 4px; font-family: 'Libre Baskerville', serif;
+        color: #f2f2f2; 
+        background: rgba(255, 74, 74, 0.6); 
+        font-size: 15px; 
+        line-height: 15px; 
+        font-weight: 700; 
+        margin: 0 2px 5px; 
+        float: left; 
+        padding: 4px; 
+        margin: 2.2px 3px 4px; 
+        font-family: 'Libre Baskerville', serif;  
+        max-width: 100px;
       }
 
     @media only screen and (max-width : 480px) {
@@ -136,7 +146,7 @@
 <section class="flexbox">      
         <div class="text"> COG URL:</div> 
         <div class="stretch">
-            <input type="text" class="text-field" name="cog-url" id="cog-url"   placeholder="Enter COG URL or click on a sample" />
+            <input type="text" class="text-field" name="cog-url" id="cog-url"  placeholder="Enter COG URL or click on a sample" />
         </div>
         <div class="normal" id="submit-url">
             <button>Submit</button>
