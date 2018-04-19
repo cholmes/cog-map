@@ -50,7 +50,7 @@ function zoomLoad(name) {
       var extent = proj.transformExtent(result.bounds, 'EPSG:4326', 'EPSG:3857');
       map.getView().fit(extent, map.getSize());
 
-      var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.jpg?url=" + url;
+      var tilesUrl = createTilesUrl(url);
       var cogLayer = new TileLayer({
         type: 'base',
         source: new XYZ({
@@ -70,6 +70,14 @@ function zoomLoad(name) {
     //TODO - include link to COG validator
 
   }
+}
+
+/* 
+ * This creates the tiles URL. Change here to use another lambda server, or change the default params.
+ * TODO: enable setting of things like RGB and linear stretch in the GUI, and then adjust the url's here.
+ */
+function createTilesUrl(url) {
+  return  "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.jpg?url=" + url + "&rgb=1,2,3";
 }
 
 //TODO: Add labels back in. Need a nice button for them, and also need to get them to overlay on the map.
@@ -128,8 +136,7 @@ function listener(newState) {
   if ('url' in newState) {
 
     //TODO: refactor in to common method with the submit, so we don't duplicate code
-    var tilesUrl = "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.png?url=" + encodeURIComponent(newState.url);
-
+    var tilesUrl = createTilesUrl(encodeURIComponent(newState.url));
     var cogLayer = new TileLayer({
       type: 'base',
       source: new XYZ({
