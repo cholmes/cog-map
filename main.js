@@ -43,7 +43,7 @@ function onClick(id, callback) {
 function zoomLoad(name) {
   if (ValidURL(name)) {
     var url = encodeURIComponent(name)
-    var boundsUrl = "https://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/bounds?url=" + url;
+    var boundsUrl = "https://14ffxwyw5l.execute-api.us-east-1.amazonaws.com/production/bounds?url=" + url;
 
     getJSON(boundsUrl, function(result) {
 
@@ -77,7 +77,7 @@ function zoomLoad(name) {
  * TODO: enable setting of things like RGB and linear stretch in the GUI, and then adjust the url's here.
  */
 function createTilesUrl(url) {
-  return  "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.jpg?url=" + url + "&rgb=1,2,3";
+  return  "https://14ffxwyw5l.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.jpg?url=" + url + "&rgb=1,2,3";
 }
 
 //TODO: Add labels back in. Need a nice button for them, and also need to get them to overlay on the map.
