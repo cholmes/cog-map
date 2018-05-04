@@ -43,7 +43,7 @@ function onClick(id, callback) {
 function zoomLoad(name) {
   if (ValidURL(name)) {
     var url = encodeURIComponent(name)
-    var boundsUrl = "https://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/bounds?url=" + url;
+    var boundsUrl = "http://localhost:8000/bounds?url=" + url;
 
     getJSON(boundsUrl, function(result) {
 
@@ -77,7 +77,7 @@ function zoomLoad(name) {
  * TODO: enable setting of things like RGB and linear stretch in the GUI, and then adjust the url's here.
  */
 function createTilesUrl(url) {
-  return  "http://bstlgagxwg.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.jpg?url=" + url + "&rgb=1,2,3";
+  return  "http://localhost:8000/tiles/{z}/{x}/{y}.png?url=" + url + "&rgb=1,2,3";
 }
 
 //TODO: Add labels back in. Need a nice button for them, and also need to get them to overlay on the map.
@@ -167,3 +167,29 @@ var update = hashed.register(state, listener);
 
 // persist center and zoom in the URL hash
 sync(map);
+
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("about");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}

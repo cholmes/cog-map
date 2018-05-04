@@ -4,6 +4,7 @@
   "description": "Example using OpenLayers with Parcel",
   "main": "main.js",
   "dependencies": {
+    "hashed": "^4.2.0",
     "jquery": "^3.2.1",
     "ol": "^4.6.4",
     "ol-hashed": "^1.0.2",
