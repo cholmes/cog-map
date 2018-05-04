@@ -10,6 +10,8 @@ import hashed from 'hashed';
 import { getJSON } from 'jquery';
 import validUrl from 'valid-url';
 
+
+var spacenetURL = ""
 var labels = new TileLayer({
   title: 'Labels',
   source: new XYZ({
@@ -40,17 +42,17 @@ function onClick(id, callback) {
   document.getElementById(id).addEventListener('click', callback);
 }
 
-function zoomLoad(name) {
+function zoomLoad(name, rgb="1,2,3", linearStretch="True", tileType="tiles", band1="5", band2="7") {
   if (ValidURL(name)) {
-    var url = encodeURIComponent(name)
+    var url = name //encodeURIComponent(name)
     var boundsUrl = "https://14ffxwyw5l.execute-api.us-east-1.amazonaws.com/production/bounds?url=" + url;
 
     getJSON(boundsUrl, function(result) {
 
       var extent = proj.transformExtent(result.bounds, 'EPSG:4326', 'EPSG:3857');
       map.getView().fit(extent, map.getSize());
-
-      var tilesUrl = createTilesUrl(url);
+      console.log(rgb)
+      var tilesUrl = createTilesUrl(name, rgb, linearStretch, tileType);
       var cogLayer = new TileLayer({
         type: 'base',
         source: new XYZ({
@@ -76,9 +78,11 @@ function zoomLoad(name) {
  * This creates the tiles URL. Change here to use another lambda server, or change the default params.
  * TODO: enable setting of things like RGB and linear stretch in the GUI, and then adjust the url's here.
  */
-function createTilesUrl(url) {
-  return  "https://14ffxwyw5l.execute-api.us-east-1.amazonaws.com/production/tiles/{z}/{x}/{y}.jpg?url=" + url + "&rgb=1,2,3";
+function createTilesUrl(url="", rgb="1,2,3", linearStretch="True", tileType="tiles", band1="5", band2="7") {
+  return  "https://14ffxwyw5l.execute-api.us-east-1.amazonaws.com/production/"+tileType+ "/{z}/{x}/{y}.jpg?url=" + url + "&rgb=" + rgb + "&linearStretch=" + linearStretch+"&band1=" + band1 + "&band2="+band2;
 }
+
+
 
 //TODO: Add labels back in. Need a nice button for them, and also need to get them to overlay on the map.
 // onClick('labels', function() {
@@ -86,30 +90,25 @@ function createTilesUrl(url) {
 // })
 
 onClick('sample-1', function() {
-  var planetUrl = "https://s3-us-west-2.amazonaws.com/planet-disaster-data/hurricane-harvey/SkySat_Freeport_s03_20170831T162740Z3.tif"
-  document.getElementById("cog-url").value = planetUrl;
-  zoomLoad(planetUrl);
+  spacenetURL = document.getElementById("cog-url").value // = spacenetURL;
+  zoomLoad(spacenetURL, "1,2,3", "False");
 });
 
 onClick('sample-2', function() {
-  var oamUrl = "http://oin-hotosm.s3.amazonaws.com/56f9b5a963ebf4bc00074e70/0/56f9c2d42b67227a79b4faec.tif"
-  document.getElementById("cog-url").value = oamUrl;
-  zoomLoad(oamUrl);
+  spacenetURL = document.getElementById("cog-url").value // = spacenetURL;
+  zoomLoad(spacenetURL, "5,3,2", "true");
 });
 
 onClick('sample-3', function() {
-  var oamUrl = "http://oin-hotosm.s3.amazonaws.com/59c66c5223c8440011d7b1e4/0/7ad397c0-bba2-4f98-a08a-931ec3a6e943.tif"
-  document.getElementById("cog-url").value = oamUrl;
-  zoomLoad(oamUrl);
+  spacenetURL = document.getElementById("cog-url").value // = spacenetURL;
+  zoomLoad(spacenetURL, "7,5,3", "true");
 });
 
-onClick('submit-url', function(event) {
-  event.preventDefault();
-  var name = document.getElementById("cog-url").value;
-  console.log("submitted url" + name)
-  zoomLoad(name);
+onClick('sample-4', function() {
+  spacenetURL = document.getElementById("cog-url").value // = spacenetURL;
+  zoomLoad(spacenetURL, "7,5,2", "true", "NDtiles");
+});
 
-})
 
 
 
