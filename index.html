@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
       crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Cloud Optimized GeoTIFF (COG) map</title>
     <style>
       html, body {
@@ -136,18 +139,7 @@
 
     /* The Modal (background) */
     .modal {
-        display: none; /* Hidden by default */
-        position: relative; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        margin: 0 auto;
-        padding-top: 100px; /* Location of the box */
-        padding: 3em;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        max-width: 800px;
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
     }
 
     /* Modal Content */
@@ -206,17 +198,39 @@
     </div>
     </div>
     
-    <div id="myModal" class="modal">
-
+<!--     <div id="myModal" class="modal">
+ -->
   <!-- Modal content -->
-  <div class="modal-content">
+  <!--div class="modal-content">
     <span class="close">&times;</span>
     <p>Some text in the Modal..</p>
-  </div>
+  </div-->
 
+<!-- </div>
+ -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="close" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
 </div>
 
-    <button id="about" class="button" data-toggle="modal" data-target="#initModal" style="position: absolute; bottom: 10px; left: 10px; z-index: 99;">
+    <button id="about" class="button" data-toggle="modal" data-target="#myModal" style="position: absolute; bottom: 10px; left: 10px; z-index: 99;">
       <i class="fas fa-question"></i>
     </button>
 
