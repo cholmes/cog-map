@@ -17,19 +17,19 @@ var labels = new TileLayer({
 
     url: 'https://{1-4}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',
     attributions: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, ' + 
-         '© <a href="https://carto.com/attribution">CARTO</a>',
+    '© <a href="https://carto.com/attribution">CARTO</a>',
   })
 });
 
 const map = new Map({
   target: 'map',
   layers: [
-    new TileLayer({
-      source: new XYZ({
-        url: 'https://{1-4}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png'
-      })
-    }),
-    labels
+  new TileLayer({
+    source: new XYZ({
+      url: 'https://{1-4}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png'
+    })
+  }),
+  labels
   ],
   view: new View({
     center: [0, 0],
@@ -78,7 +78,7 @@ function zoomLoad(name) {
  * This creates the tiles URL. Change here to use another lambda server, or change the default params.
  * TODO: enable setting of things like RGB and linear stretch in the GUI, and then adjust the url's here.
  */
-function createTilesUrl(url) {
+ function createTilesUrl(url) {
   return  "https://tiles.rdnt.io/tiles/{z}/{x}/{y}?url=" + url;
 }
 
@@ -181,17 +181,17 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal 
 btn.onclick = function() {
-    modal.style.display = "block";
+  modal.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-    modal.style.display = "none";
+  modal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }
