@@ -10,6 +10,7 @@ import hashed from 'hashed';
 import { getJSON } from 'jquery';
 import validUrl from 'valid-url';
 
+
 var labels = new TileLayer({
   title: 'Labels',
   source: new XYZ({
