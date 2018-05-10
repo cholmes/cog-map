@@ -43,7 +43,8 @@ function onClick(id, callback) {
 function zoomLoad(name) {
   if (ValidURL(name)) {
     var url = encodeURIComponent(name)
-    var boundsUrl = "http://localhost:8000/bounds?url=" + url;
+    var boundsUrl = "https://tiles.rdnt.io/bounds?url=" + url;
+
 
     getJSON(boundsUrl, function(result) {
 
@@ -77,7 +78,7 @@ function zoomLoad(name) {
  * TODO: enable setting of things like RGB and linear stretch in the GUI, and then adjust the url's here.
  */
 function createTilesUrl(url) {
-  return  "http://localhost:8000/tiles/{z}/{x}/{y}.png?url=" + url + "&rgb=1,2,3";
+  return  "https://tiles.rdnt.io/tiles/{z}/{x}/{y}?url=" + url;
 }
 
 //TODO: Add labels back in. Need a nice button for them, and also need to get them to overlay on the map.
